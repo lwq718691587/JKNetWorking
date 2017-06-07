@@ -37,6 +37,7 @@ static NSUInteger _requestIdentifier = 0;
         self.cachePolicy = BGNetworkRquestCacheNone;
         self.methodName = self.methodName;
         self.isJsonParamType = YES;
+        _target = self;
     }
     return self;
 }
@@ -117,7 +118,7 @@ static NSUInteger _requestIdentifier = 0;
 /**
  *  用户初始化后，此url才有效。
  */
-+ (NSString*)getRequestMethodName{
+- (NSString*)getRequestMethodName{
     NSString* methodName =  objc_getAssociatedObject([self class], BGNetworkRequestMethodNameKey);
     //为了外面使用isHttpQueueFinished的方便，不返回nil。
     if(!methodName){
@@ -141,7 +142,7 @@ static NSUInteger _requestIdentifier = 0;
 
 @implementation BGNetworkRequest (BGNetworkManager)
 #pragma mark - class method
-+ (void)cancelRequest{
+- (void)cancelRequest{
     [[BGNetworkManager sharedManager] cancelRequestWithUrl:[self getRequestMethodName]];
 }
 
