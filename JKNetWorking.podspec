@@ -14,4 +14,3 @@ s.source_files  = "JKNetWorking","*.{h,m}"
 
 end
 
-  s.source_files = 'JKMediator/Classes/**/*'
