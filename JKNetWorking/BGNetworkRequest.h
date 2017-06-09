@@ -101,7 +101,6 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest * _Nonnull request, NSErro
  */
 @property (nonatomic, copy, readonly) NSDictionary * _Nonnull requestHTTPHeaderFields;
     
-@property (strong, nonatomic) id target;
 
 
 #pragma mark - 设置或获取请求头的内容
