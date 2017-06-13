@@ -29,6 +29,14 @@
  */
 - (void)preProcessingRequest:(BGNetworkRequest * _Nonnull)request;
 
+
+/**
+ 设置请求头字典
+
+ @return 请求头字典
+ */
+-(NSMutableDictionary *_Nullable)headerDic;
+
 /**
  *  对request当中的HTTP Header进行处理，可以在此方法内部加入公共的请求头内容
  *

@@ -11,6 +11,7 @@
 
 @interface BGNetworkConfiguration ()
 @property(nonatomic, strong) NSString *baseURLString;
+
 @end
 
 @implementation BGNetworkConfiguration
@@ -33,8 +34,12 @@
 - (void)preProcessingRequest:(BGNetworkRequest *)request {
 }
 
+-(NSMutableDictionary *)headerDic{
+    return [@{@"User-Agent":@"iPhone"} mutableCopy];
+}
+
 - (NSDictionary *)requestHTTPHeaderFields:(BGNetworkRequest *)request {
-    NSMutableDictionary *allHTTPHeaderFileds = [@{@"User-Agent":@"iPhone"} mutableCopy];
+    NSMutableDictionary *allHTTPHeaderFileds = [self headerDic];
     if (request.isJsonParamType) {
         [allHTTPHeaderFileds setValue:@"application/json" forKey:@"Content-Type"];
     }else{
@@ -48,9 +53,9 @@
 
 - (NSString *)queryStringForURLWithRequest:(BGNetworkRequest *)request{
     if(request.httpMethod == BGNetworkRequestHTTPGet){
-        return BGQueryStringFromParamDictionary(request.parametersDic);
-    }
-    else{
+        NSString *paramString = BGQueryStringFromParamDictionary(request.parametersDic);
+        return [NSString stringWithFormat:@"%@", paramString];
+    }else{
         return nil;
     }
 }
