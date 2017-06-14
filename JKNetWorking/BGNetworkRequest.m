@@ -142,7 +142,7 @@ static NSUInteger _requestIdentifier = 0;
 @implementation BGNetworkRequest (BGNetworkManager)
 #pragma mark - class method
 - (void)cancelRequest{
-    [[BGNetworkManager sharedManager] cancelRequestWithUrl:[self getRequestMethodName]];
+    [[BGNetworkManager sharedManager] cancelRequestWithUrl:_methodName];
 }
 
 - (void)sendRequestWithSuccess:(BGSuccessCompletionBlock)successCompletionBlock businessFailure:(BGBusinessFailureBlock)businessFailureBlock networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
