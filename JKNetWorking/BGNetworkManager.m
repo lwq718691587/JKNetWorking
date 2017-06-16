@@ -361,7 +361,7 @@ static BGNetworkManager *_manager = nil;
        businessFailure:(BGBusinessFailureBlock)businessFailureBlock{
     //remove temp request
     [self removeTempRequest:request];
-    if (dataTask.state == NSURLSessionTaskStateCanceling || error.code == -999) return;
+    if (task.state == NSURLSessionTaskStateCanceling || error.code == -999) return;
     dispatch_async(self.dataHandleQueue, ^{
         //对数据进行解密
         NSData *decryptData = [self.configuration decryptResponseData:responseData response:task.response request:request];
