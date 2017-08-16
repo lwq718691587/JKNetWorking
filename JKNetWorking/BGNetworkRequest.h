@@ -39,6 +39,21 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
     BGNetworkRequestCacheDataAndReadCacheLoadData,
 };
 
+/**
+ *  验签的不同方法
+ */
+typedef enum : NSUInteger {
+    kSinTypeNone,
+    kSinType_1,
+    kSinType_2,
+    kSinType_3,
+    kSinType_4,
+    kSinType_5,
+    kSinType_6,
+    kSinType_7,
+    kSinType_8,
+    kSinType_9,
+} ESinKeyType;
 
 #pragma mark - completion block
 typedef void(^BGSuccessCompletionBlock)(BGNetworkRequest  * _Nonnull request, id  _Nullable response);
@@ -80,6 +95,11 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest * _Nonnull request, NSErro
  服务器是否是接受json类型的参数  默认为yes
  */
 @property (nonatomic, assign) BOOL                 isJsonParamType;
+
+/**
+ 服务器验签的类型 配合 - (void)preProcessingRequest:(BGNetworkRequest * _Nonnull)request; 使用
+ */
+@property (nonatomic, assign) ESinKeyType          sinKeyType;
 
 /**
  *  HTTP请求的方法，默认GET，现支持GET和POST

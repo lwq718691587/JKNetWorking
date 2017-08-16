@@ -25,7 +25,7 @@
  *  在请求以前，对request预处理一下，默认不处理
  *
  *  @param request 请求
- *  @note 此方法添加，为了适应多域名，可以对request.methodName设置一个绝对路径
+ *  @note 此方法添加，为了适应多域名，可以对request.methodName设置一个绝对路径 也可再次 添加 公共的验签参数
  */
 - (void)preProcessingRequest:(BGNetworkRequest * _Nonnull)request;
 

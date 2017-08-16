@@ -37,6 +37,7 @@ static NSUInteger _requestIdentifier = 0;
         self.cachePolicy = BGNetworkRquestCacheNone;
         self.methodName = self.methodName;
         self.isJsonParamType = YES;
+        self.sinKeyType = kSinTypeNone;
     }
     return self;
 }
