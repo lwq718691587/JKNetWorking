@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'JKNetWorking'
-s.version = '1.0.8'
+s.version = '1.0.9'
 s.license = 'MIT'
 s.summary = 'Simple NetWorking Kit'
 s.homepage = 'https://github.com/lwq718691587/JKNetWorking'
