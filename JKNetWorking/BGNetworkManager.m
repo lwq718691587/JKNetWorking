@@ -234,6 +234,44 @@ static BGNetworkManager *_manager = nil;
     }];
 }
 
+
+- (void)sendUploadImagesRequest:(BGUploadImagesRequest * _Nonnull)request
+                       progress:(nullable void (^)(NSProgress * _Nonnull uploadProgress)) uploadProgress
+                        success:(BGSuccessCompletionBlock _Nullable)successCompletionBlock
+                businessFailure:(BGBusinessFailureBlock _Nullable)businessFailureBlock
+                 networkFailure:(BGNetworkFailureBlock _Nullable)networkFailureBlock{
+    [self.httpClient POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        for (UIImage *image in request.images) {
+            
+            NSData *imageData = UIImageJPEGRepresentation(image,request.compressionQuality);
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyyMMddHHmmss";
+            NSString *str = [formatter stringFromDate:[NSDate date]];
+            NSString *fileName;
+            if ([request.mimeType containsString:@"png"]) {
+                fileName = [NSString stringWithFormat:@"%@.png", str];
+            }else{
+                fileName = [NSString stringWithFormat:@"%@.jpg", str];
+            }
+            
+            
+            [formData appendPartWithFileData:imageData name:request.uploadKey fileName:fileName mimeType:request.mimeType];
+        }
+        
+    } progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        
+        [self networkSuccess:request task:task responseData:responseObject success:successCompletionBlock businessFailure:businessFailureBlock];
+        
+    } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nullable error) {
+        
+        [self networkFailure:request error:error completion:networkFailureBlock];
+        
+    }];
+}
+
+
+
 - (void)sendRequest:(BGNetworkRequest *)request
             success:(BGSuccessCompletionBlock)successCompletionBlock
     businessFailure:(BGBusinessFailureBlock)businessFailureBlock
