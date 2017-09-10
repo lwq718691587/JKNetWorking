@@ -240,6 +240,12 @@ static BGNetworkManager *_manager = nil;
                         success:(BGSuccessCompletionBlock _Nullable)successCompletionBlock
                 businessFailure:(BGBusinessFailureBlock _Nullable)businessFailureBlock
                  networkFailure:(BGNetworkFailureBlock _Nullable)networkFailureBlock{
+    [self.configuration preProcessingRequest:request];
+    
+    //临时保存请求
+    NSString *requestKey = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
+    self.tempRequestDic[requestKey] = request;
+    
     [self.httpClient POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (UIImage *image in request.images) {
