@@ -248,6 +248,7 @@ static BGNetworkManager *_manager = nil;
     
     [self.httpClient POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
+        int i = 0;
         for (UIImage *image in request.images) {
             
             NSData *imageData = UIImageJPEGRepresentation(image,request.compressionQuality);
@@ -261,10 +262,13 @@ static BGNetworkManager *_manager = nil;
                 fileName = [NSString stringWithFormat:@"%@.jpg", str];
             }
             
-            
-            [formData appendPartWithFileData:imageData name:request.uploadKey fileName:fileName mimeType:request.mimeType];
+            if (request.images.count == 1) {
+                [formData appendPartWithFileData:imageData name:request.uploadKey  fileName:fileName mimeType:request.mimeType];
+            }else{
+                [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"%@%d",request.uploadKey,i]  fileName:fileName mimeType:request.mimeType];
+                i++;
+            }
         }
-        
     } progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         
         [self networkSuccess:request task:task responseData:responseObject success:successCompletionBlock businessFailure:businessFailureBlock];
