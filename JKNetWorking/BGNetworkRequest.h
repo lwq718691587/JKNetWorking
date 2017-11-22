@@ -117,6 +117,12 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest * _Nonnull request, NSErro
 @property (nonatomic, copy, readonly) NSDictionary * _Nonnull parametersDic;
 
 /**
+ *  参数数组
+ */
+@property (nonatomic, strong)NSArray * _Nullable parametersArr;
+
+
+/**
  *  请求头
  */
 @property (nonatomic, copy, readonly) NSDictionary * _Nonnull requestHTTPHeaderFields;

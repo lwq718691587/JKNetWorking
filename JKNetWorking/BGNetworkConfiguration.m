@@ -61,13 +61,14 @@
 }
 
 - (NSData *)httpBodyDataWithRequest:(BGNetworkRequest *)request{
-    if(request.httpMethod == BGNetworkRequestHTTPGet || !request.parametersDic.count){
+    if(request.httpMethod == BGNetworkRequestHTTPGet || (!request.parametersDic.count && !request.parametersArr.count)){
         return nil;
     }
     NSData *httpBody;
     if (request.isJsonParamType) {
         NSError *error = nil;
-        httpBody = [NSJSONSerialization dataWithJSONObject:request.parametersDic options: (NSJSONWritingOptions)0 error:&error];
+        
+        httpBody = [NSJSONSerialization dataWithJSONObject:request.parametersArr.count > 0?request.parametersArr:request.parametersDic options: (NSJSONWritingOptions)0 error:&error];
         if(error){
             return nil;
         }
