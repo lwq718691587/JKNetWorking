@@ -97,6 +97,11 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest * _Nonnull request, NSErro
 @property (nonatomic, assign) BOOL                 isJsonParamType;
 
 /**
+ 是否为xml请求 默认为NO
+ */
+@property (nonatomic, assign) BOOL                 isXMLRequest;
+
+/**
  服务器验签的类型 配合 - (void)preProcessingRequest:(BGNetworkRequest * _Nonnull)request; 使用
  */
 @property (nonatomic, assign) ESinKeyType          sinKeyType;

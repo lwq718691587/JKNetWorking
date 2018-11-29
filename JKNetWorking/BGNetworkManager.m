@@ -413,7 +413,13 @@ static BGNetworkManager *_manager = nil;
         //对数据进行解密
         NSData *decryptData = [self.configuration decryptResponseData:responseData response:task.response request:request];
         //解析数据
-        id responseObject = BGParseJsonData(decryptData);
+        id responseObject = nil;
+        if (request.isXMLRequest) {
+            responseObject = BGParseJsonData(decryptData);
+        }else{
+            responseObject = [[NSXMLParser alloc]initWithData:responseData];
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             if(responseObject && [self.configuration shouldBusinessSuccessWithResponseData:responseObject task:task request:request]) {
                 if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
