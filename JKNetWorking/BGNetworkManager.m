@@ -414,7 +414,7 @@ static BGNetworkManager *_manager = nil;
         NSData *decryptData = [self.configuration decryptResponseData:responseData response:task.response request:request];
         //解析数据
         id responseObject = nil;
-        if (request.isXMLRequest) {
+        if (!request.isXMLRequest) {
             responseObject = BGParseJsonData(decryptData);
         }else{
             responseObject = [[NSXMLParser alloc]initWithData:responseData];
