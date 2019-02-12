@@ -31,6 +31,14 @@
     return _baseURLString;
 }
 
+- (BOOL)checkProxy {
+    return NO;
+}
+
+- (void)handleProxy {
+    
+}
+
 - (void)preProcessingRequest:(BGNetworkRequest *)request {
 }
 

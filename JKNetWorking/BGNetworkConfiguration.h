@@ -21,6 +21,17 @@
 
 
 @optional
+
+/**
+ *  是否检测 用户连接代理
+ */
+- (BOOL)checkProxy;
+
+/**
+ 处理检测到代理的操作，例如弹出提示等
+ */
+- (void)handleProxy;
+
 /**
  *  在请求以前，对request预处理一下，默认不处理
  *

@@ -328,6 +328,15 @@ static BGNetworkManager *_manager = nil;
     
     //发送请求
     __weak BGNetworkManager *weakManager = self;
+    
+    if ([self.configuration checkProxy] && [self getProxyStatus]) {
+        [weakManager networkFailure:request error:nil completion:^(BGNetworkRequest * _Nonnull request, NSError * _Nullable error) {
+            [self.configuration handleProxy];
+        }];
+     
+        return;
+    }
+    
     switch (request.httpMethod) {
         case BGNetworkRequestHTTPGet:{
             [self.httpClient GET:request.methodName parameters:request.parametersDic progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -552,4 +561,18 @@ static BGNetworkManager *_manager = nil;
     
     return [mutableRequest copy];
 }
+
+
+// 检测是否设置代理
+- (BOOL)getProxyStatus {
+    NSDictionary *proxySettings =  (__bridge NSDictionary *)(CFNetworkCopySystemProxySettings());
+    NSArray *proxies = (__bridge NSArray *)(CFNetworkCopyProxiesForURL((__bridge CFURLRef _Nonnull)([NSURL URLWithString:@"https://www.baidu.com"]), (__bridge CFDictionaryRef _Nonnull)(proxySettings)));
+    NSDictionary *settings = [proxies objectAtIndex:0];
+    if ([[settings objectForKey:(NSString *)kCFProxyTypeKey] isEqualToString:@"kCFProxyTypeNone"]){
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
 @end
